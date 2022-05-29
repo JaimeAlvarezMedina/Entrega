@@ -16,7 +16,7 @@ class Login extends React.Component{
       var datos= new FormData();
       datos.append('usuario', this.state.usuario);
       datos.append('contra', this.state.contra);
-      fetch("http://localhost/php_insti/iniciar_sesion.php",{
+      fetch("http://159.223.172.191/iniciar_sesion.php",{
           method : "POST",
           body: datos
       })
@@ -43,7 +43,7 @@ class Login extends React.Component{
     var datos= new FormData();
     datos.append('usuario', this.state.usuario);
       datos.append('contra', this.state.contra);
-    fetch("http://localhost/php_insti/anadir_usuario.php",{
+    fetch("http://159.223.172.191/anadir_usuario.php",{
         method : "POST",
         body: datos
     })

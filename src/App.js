@@ -115,7 +115,7 @@ class Foro extends React.Component {
         else {
             datos.append("usuario", "");
         }
-        fetch("http://localhost/php_insti/consultar_usuario.php", {
+        fetch("http://159.223.172.191/consultar_usuario.php", {
             method: "POST",
             body: datos
         })
@@ -141,7 +141,7 @@ class Foro extends React.Component {
         } else {
             var datos = new FormData();
             datos.append('barra_busqueda', busqueda);
-            fetch("http://localhost/php_insti/filtrar_busqueda.php", {
+            fetch("http://159.223.172.191/filtrar_busqueda.php", {
                 method: "POST",
                 body: datos
             })
@@ -176,7 +176,7 @@ class Foro extends React.Component {
             seleccionado = currentTarget.id;
             var datos = new FormData();
             datos.append('nombre_categoria', currentTarget.id);
-            fetch("http://localhost/php_insti/filtrar_categorias.php", {
+            fetch("http://159.223.172.191/filtrar_categorias.php", {
                 method: "POST",
                 body: datos
             })
@@ -196,7 +196,7 @@ class Foro extends React.Component {
     }
     recoger_categorias() {
         var datos = new FormData();
-        fetch("http://localhost/php_insti/recoger_categorias.php", {
+        fetch("http://159.223.172.191/recoger_categorias.php", {
             method: "POST",
             body: datos
         })
@@ -214,7 +214,7 @@ class Foro extends React.Component {
     }
     recoger_articulo() {
         var datos = new FormData();
-        fetch("http://localhost/php_insti/recoger_informacion.php", {
+        fetch("http://159.223.172.191/recoger_informacion.php", {
             method: "POST",
             body: datos
         })
@@ -235,7 +235,7 @@ class Foro extends React.Component {
     borrar_publicacion({ currentTarget }) {
         var datos = new FormData();
         datos.append('id_publicacion', currentTarget.id);
-        fetch("http://localhost/php_insti/borrar_publicacion.php", {
+        fetch("http://159.223.172.191/borrar_publicacion.php", {
             method: "POST",
             body: datos
         })
@@ -278,7 +278,7 @@ class Foro extends React.Component {
     insertar() {
         var datos = new FormData;
         datos.append('archivo', this.fileInput.current.files[0])
-        fetch("http://localhost/Probar_codigo/Probarsubirimg.php", {
+        fetch("http://159.223.172.191/Probarsubirimg.php", {
             method: 'POST',
             body: datos
         })
@@ -294,20 +294,6 @@ class Foro extends React.Component {
                 }
             )
     }
-    // preview_perfil() {
-    //     var elemento_antiguo = document.getElementById("preview");
-
-    //     var elemento_padre = elemento_antiguo.parentNode;
-
-    //     var elemento_nuevo = document.createElement("div");
-    //     var escribir = document.createElement("textarea");
-    //     escribir.setAttribute("className", "preview_perfil");
-    //     escribir.setAttribute("rows", "4");
-    //     elemento_nuevo.appendChild(escribir);
-
-    //     elemento_padre.replaceChild(elemento_nuevo, elemento_antiguo);
-
-    // }
     perfil_usuario({ currentTarget }) {
         window.location.href = "/Perfil";
         localStorage.setItem("Creador", currentTarget.id);

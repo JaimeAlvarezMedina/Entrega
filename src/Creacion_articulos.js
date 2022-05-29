@@ -77,7 +77,7 @@ closeNav() {
     datos.append('cuerpo', texto.join('//-//'));
     datos.append('titulo', document.getElementById("titulo").value);
     datos.append('categoria', document.getElementById("categoria").value);
-    fetch("http://localhost/php_insti/subir_post.php", {
+    fetch("http://159.223.172.191/subir_post.php", {
       method: "POST",
       body: datos
     })
@@ -103,7 +103,7 @@ closeNav() {
         var datos = new FormData();
         datos.append('usuario', localStorage.getItem("usuario"));
         datos.append('subir_archivo', document.getElementById("img-" + contador).files[0]);
-        fetch("http://localhost/php_insti/upload.php", {
+        fetch("http://159.223.172.191/upload.php", {
           method: "POST",
           body: datos
         })

@@ -93,7 +93,7 @@ class Foro extends React.Component {
             alert("Create una cuenta");
             window.location.href = "/login";
         }
-        fetch("http://localhost/php_insti/consultar_usuario.php", {
+        fetch("http://159.223.172.191/consultar_usuario.php", {
             method: "POST",
             body: datos
         })
@@ -116,7 +116,7 @@ class Foro extends React.Component {
     recoger_categorias_distintas() {
         var datos = new FormData();
         datos.append('nombre_categoria', localStorage.getItem("Creador"));
-        fetch("http://localhost/php_insti/categorias_distintas.php", {
+        fetch("http://159.223.172.191/categorias_distintas.php", {
             method: "POST",
             body: datos
         })
@@ -137,7 +137,7 @@ class Foro extends React.Component {
         var datos = new FormData();
         var array=[];
         datos.append('nombre_categoria', localStorage.getItem("Creador"));
-        fetch("http://localhost/php_insti/count_categorias.php", {
+        fetch("http://159.223.172.191/count_categorias.php", {
             method: "POST",
             body: datos
         })

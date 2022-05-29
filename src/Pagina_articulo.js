@@ -2,8 +2,6 @@ import './Pagina_articulo.css';
 import React from 'react';
 import like from './Imagenes/like.png';
 import dislike from './Imagenes/Dislike.png';
-import Like_pulsado from './Imagenes/Like_pulsado.png';
-import Dislike_pulsado from './Imagenes/Dislike_pulsado.png';
 
 const cargarImagen = require.context("./uploads", true);
 
@@ -12,7 +10,8 @@ var mostrado = false;
 var inter;
 var entro = false;
 
-const curiosidades = ["Debido a las limitaciones de memoria del primer Deus Ex, las torres gemelas no fueron incluidas en la recreación de la Nueva York de 2052. En la historia del juego se explica su ausencia como resultado de un ataque terrorista.", "En GTA: San Andreas si tu habilidad de conducción es baja, CJ mirará hacia atrás cuando el coche vaya en reversa. Cuando mejores tu habilidad, CJ empezará a usar los espejos retrovisores.", "La razón por la que el personaje de Crash no tiene cuello es debido a las limitaciones técnicas de aquella época (1996). Diseñaron a Crash de esa manera para simplificarlo, restandole complejidad a su geometría.", "La Playstation 2 ha tenido tanto éxito y sido tan popular que Sony continuó fabricandola hasta el mes en que fue anunciada la Playstation 4", "En Hitman 3 (2021) si escaneas el código QR detrás de la cabeza de los sujetos de prueba que aparecen en la misión «Chongqing» te muestra una foto de los desarrolladores", "En Red Dead Redemption 2 la bandera de Estados Unidos tiene tan solo 45 estrellas porque en aquel tiempo (1899) solo existian 45 estados. La actual que todos conocemos posee 50.", "En 2007, Rockstar brindó un teléfono a sus fans para que llamen y den su opinión sobre lo que estaba mal en Estados Unidos. Las mejores llamadas se incluyeron en una de las estaciones de radio del juego, WKTT (We Know The Truth).", "Un FPS bastante innovador para su época, el GoldenEye 007, fue desarrollado un equipo de no mas de 10 personas quienes en su mayoría no habían trabajado previamente en la industria de los videojuegos.", "En GTA IV, si entras con un coche convertible al lavadero la secuencia mostrará que lo hacen pasar por los rodillos en vez de lavarlo a mano", "En Hitman 2 (2018) si pesas al agente 47 sobre una balanza te dará 47.0 KG", "En Project Cars 2, si la antena de tu coche se averia en exceso por golpes no podrás contactar a los boxes", "Es posible terminar Far Cry 4 en menos de 30 minutos aprovechando un final alternativo en el que es necesario permanecer sentado por 15 minutos en la casa del antagonista luego de ser capturado por sus fuerzas.", "El canto de SEGA que se muestra al comienzo de Sonic: The Hedhegog ocupaba 1/8 del espacio disponible en el cartucho para Megadrive."];
+const curiosidades = ["Durante el desarrollo de GoldenEye 007 se consideró como posibilidad que los jugadores tengan que desconectar y volver a insertar el Rumble Pack (módulo de vibración) para poder recargar el arma.","Debido a las limitaciones de memoria del primer Deus Ex, las torres gemelas no fueron incluidas en la recreación de la Nueva York de 2052. En la historia del juego se explica su ausencia como resultado de un ataque terrorista.", "En GTA: San Andreas si tu habilidad de conducción es baja, CJ mirará hacia atrás cuando el coche vaya en reversa. Cuando mejores tu habilidad, CJ empezará a usar los espejos retrovisores.", "La razón por la que el personaje de Crash no tiene cuello es debido a las limitaciones técnicas de aquella época (1996). Diseñaron a Crash de esa manera para simplificarlo, restandole complejidad a su geometría.", "La Playstation 2 ha tenido tanto éxito y sido tan popular que Sony continuó fabricandola hasta el mes en que fue anunciada la Playstation 4", "En Hitman 3 (2021) si escaneas el código QR detrás de la cabeza de los sujetos de prueba que aparecen en la misión «Chongqing» te muestra una foto de los desarrolladores", "En Red Dead Redemption 2 la bandera de Estados Unidos tiene tan solo 45 estrellas porque en aquel tiempo (1899) solo existian 45 estados. La actual que todos conocemos posee 50.", "En 2007, Rockstar brindó un teléfono a sus fans para que llamen y den su opinión sobre lo que estaba mal en Estados Unidos. Las mejores llamadas se incluyeron en una de las estaciones de radio del juego, WKTT (We Know The Truth).", "Un FPS bastante innovador para su época, el GoldenEye 007, fue desarrollado un equipo de no mas de 10 personas quienes en su mayoría no habían trabajado previamente en la industria de los videojuegos.", "En GTA IV, si entras con un coche convertible al lavadero la secuencia mostrará que lo hacen pasar por los rodillos en vez de lavarlo a mano",
+"En Hitman 2 (2018) si pesas al agente 47 sobre una balanza te dará 47.0 KG", "En Project Cars 2, si la antena de tu coche se averia en exceso por golpes no podrás contactar a los boxes", "Es posible terminar Far Cry 4 en menos de 30 minutos aprovechando un final alternativo en el que es necesario permanecer sentado por 15 minutos en la casa del antagonista luego de ser capturado por sus fuerzas.", "El canto de SEGA que se muestra al comienzo de Sonic: The Hedhegog ocupaba 1/8 del espacio disponible en el cartucho para Megadrive.","En la versión japonesa de Fallout 3 se eliminó la posibilidad de detonar la bomba atómica en la misión The Power of The Atom y así evitar tocar un tema demasiado polémico para los nipones."];
 
 function Perfil(props) {
     localStorage.setItem("tipo", props.id);
@@ -132,7 +131,7 @@ class Articulo extends React.Component {
     recoger_articulo() {
         var datos = new FormData();
         datos.append('id', localStorage.getItem('id_articulo'));
-        fetch("http://localhost/php_insti/recoger_articulo.php", {
+        fetch("http://159.223.172.191/recoger_articulo.php", {
             method: "POST",
             body: datos
         })
@@ -160,7 +159,7 @@ class Articulo extends React.Component {
             var datos = new FormData();
             datos.append("usuario", localStorage.getItem("usuario"));
             datos.append("id", localStorage.getItem('id_articulo'));
-            fetch("http://localhost/php_insti/consultar_color.php", {
+            fetch("http://159.223.172.191/consultar_color.php", {
                 method: "POST",
                 body: datos
             })
@@ -193,7 +192,7 @@ class Articulo extends React.Component {
         var datos = new FormData();
         datos.append('id_categorias', localStorage.getItem('id_articulo'));
         datos.append("usuario", localStorage.getItem("usuario"));
-        fetch("http://localhost/php_insti/likes.php", {
+        fetch("http://159.223.172.191/likes.php", {
             method: "POST",
             body: datos
         })
@@ -217,7 +216,7 @@ class Articulo extends React.Component {
 
         datos.append('id_categorias', localStorage.getItem('id_articulo'));
         datos.append("usuario", localStorage.getItem("usuario"));
-        fetch("http://localhost/php_insti/dislikes.php", {
+        fetch("http://159.223.172.191/dislikes.php", {
             method: "POST",
             body: datos
         })

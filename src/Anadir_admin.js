@@ -15,7 +15,7 @@ class Anadir_admin extends React.Component{
     var datos= new FormData();
     datos.append('usuario', this.state.usuario);
       datos.append('contra', this.state.contra);
-    fetch("http://localhost/php_insti/anadir_admin.php",{
+    fetch("http://159.223.172.191/anadir_admin.php",{
         method : "POST",
         body: datos
     })

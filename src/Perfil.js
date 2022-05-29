@@ -89,7 +89,7 @@ class Foro extends React.Component {
         else {
             datos.append("usuario", "");
         }
-        fetch("http://localhost/php_insti/consultar_usuario.php", {
+        fetch("http://159.223.172.191/consultar_usuario.php", {
             method: "POST",
             body: datos
         })
@@ -112,7 +112,7 @@ class Foro extends React.Component {
             var datos = new FormData();
             datos.append('id_publicacion', currentTarget.id);
 
-            fetch("http://localhost/php_insti/borrar_publicacion.php", {
+            fetch("http://159.223.172.191/borrar_publicacion.php", {
                 method: "POST",
                 body: datos
             })
@@ -147,7 +147,7 @@ class Foro extends React.Component {
             var datos = new FormData();
             datos.append('nombre_categoria', currentTarget.id);
 
-            fetch("http://localhost/php_insti/filtrar_categorias.php", {
+            fetch("http://159.223.172.191/filtrar_categorias.php", {
                 method: "POST",
                 body: datos
             })
@@ -168,7 +168,7 @@ class Foro extends React.Component {
     publicaciones_usuario() {
         var datos = new FormData();
         datos.append('creador', localStorage.getItem("Creador"));
-        fetch("http://localhost/php_insti/publicacion_usuario.php", {
+        fetch("http://159.223.172.191/publicacion_usuario.php", {
             method: "POST",
             body: datos
         })
@@ -188,7 +188,7 @@ class Foro extends React.Component {
         
         var datos = new FormData();
         datos.append('creador', localStorage.getItem("Creador"));
-        fetch("http://localhost/php_insti/actividad_usuario.php", {
+        fetch("http://159.223.172.191/actividad_usuario.php", {
             method: "POST",
             body: datos
         })
@@ -209,7 +209,7 @@ class Foro extends React.Component {
     publicaciones_usuario() {
         var datos = new FormData();
         datos.append('creador', localStorage.getItem("Creador"));
-        fetch("http://localhost/php_insti/publicacion_usuario.php", {
+        fetch("http://159.223.172.191/publicacion_usuario.php", {
             method: "POST",
             body: datos
         })
@@ -230,7 +230,7 @@ class Foro extends React.Component {
     cantidad_post_usuario() {
         var datos = new FormData();
         datos.append('nombre_categoria', localStorage.getItem("Creador"));
-        fetch("http://localhost/php_insti/cantidad_post.php", {
+        fetch("http://159.223.172.191/cantidad_post.php", {
             method: "POST",
             body: datos
         })
@@ -249,7 +249,7 @@ class Foro extends React.Component {
     recoger_categorias() {
         var datos = new FormData();
         datos.append('Creador', localStorage.getItem("Creador"));
-        fetch("http://localhost/php_insti/publicacion_usuario.php", {
+        fetch("http://159.223.172.191/publicacion_usuario.php", {
             method: "POST",
             body: datos
         })
@@ -268,7 +268,7 @@ class Foro extends React.Component {
     recoger_datos() {
         var datos = new FormData();
         datos.append('Creador', localStorage.getItem("Creador"));
-        fetch("http://localhost/php_insti/recoger_datos.php", {
+        fetch("http://159.223.172.191/recoger_datos.php",{
             method: "POST",
             body: datos
         })
@@ -286,7 +286,7 @@ class Foro extends React.Component {
     }
     recoger_articulo() {
         var datos = new FormData();
-        fetch("http://localhost/php_insti/recoger_informacion.php", {
+        fetch("http://159.223.172.191/recoger_informacion.php", {
             method: "POST",
             body: datos
         })
@@ -305,7 +305,7 @@ class Foro extends React.Component {
     borrar_publicacion({ currentTarget }) {
         var datos = new FormData();
         datos.append('id_publicacion', currentTarget.id);
-        fetch("http://localhost/php_insti/borrar_publicacion.php", {
+        fetch("http://159.223.172.191/borrar_publicacion.php", {
             method: "POST",
             body: datos
         })

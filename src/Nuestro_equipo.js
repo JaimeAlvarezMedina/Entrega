@@ -101,7 +101,7 @@ class Foro extends React.Component {
         else {
             datos.append("usuario", "");
         }
-        fetch("http://localhost/php_insti/consultar_usuario.php", {
+        fetch("http://159.223.172.191/consultar_usuario.php", {
             method: "POST",
             body: datos
         })
