@@ -1,0 +1,31 @@
+#todo{
+    text-align: center;
+    display: none;
+    margin-top: 80px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#cargar{
+    width: 50px;
+    height: 50px;
+    margin-left: 49%;
+    margin-top: 15%;
+}
+
+#curiosidad{
+    margin-top: 5%;
+    width: 25%;
+    margin-left: 38%;
+}
+#imagen_likes{
+    border-radius: 10px;
+    padding: 2px;
+    width: 40px;
+}
+#imagen_dislikes{
+    border-radius: 10px;
+    padding: 2px;
+    width: 40px;
+}
