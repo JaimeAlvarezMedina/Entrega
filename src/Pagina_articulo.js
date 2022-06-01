@@ -3,7 +3,7 @@ import React from 'react';
 import like from './Imagenes/like.png';
 import dislike from './Imagenes/Dislike.png';
 
-const cargarImagen = require.context("./uploads", true);
+const cargarImagen = require.context("/home/imagenes", true);
 
 var contador = 0;
 var mostrado = false;
@@ -64,7 +64,6 @@ class Articulo extends React.Component {
         this.openNav = this.openNav.bind(this);
         this.closeNav = this.closeNav.bind(this);
         this.funcion = this.asignar_funciones.bind(this);
-        this.alerta = this.anadir_advertencia.bind(this);
     }
 
     openNav() {
@@ -100,6 +99,7 @@ class Articulo extends React.Component {
 
                 if (actual.substring(0, 4) == "img-") {
                     var elemento_foto = document.createElement("img");
+		    elemento_foto.setAttribute("id","imagen_post");
                     elemento_foto.setAttribute("src", cargarImagen('./' + array_cuerpo[contador]));
                     elemento_padre.appendChild(elemento_foto);
                 }
@@ -186,8 +186,6 @@ class Articulo extends React.Component {
         }
     }
 
-    // document.getElementById("imagen_dislikes").style.backgroundColor="#db2f23";
-    //             document.getElementById("imagen_likes").style.backgroundColor="none";
     like_usuario() {
         var datos = new FormData();
         datos.append('id_categorias', localStorage.getItem('id_articulo'));
@@ -236,35 +234,6 @@ class Articulo extends React.Component {
                 }
             )
     }
-    anadir_advertencia() {
-        if (entro != true) {
-            entro = true;
-            var elementopadre = document.getElementById("crear_alerta");
-            var elemento = document.createElement("div");
-            elemento.setAttribute("id", "alerta");
-            elemento.setAttribute("role", "alert");
-            elemento.setAttribute("aria-live", "assertive");
-            elemento.setAttribute("aria-atomic", "true");
-            elemento.setAttribute("class", "toast toast-demo d-flex align-items-center text-white bg-danger border-0 fade show");
-
-            var elementocuerpo = document.createElement("div");
-            elementocuerpo.setAttribute("class", "toast-body");
-            elementocuerpo.appendChild(document.createTextNode("No puede votar en un post donde ya ha votado"));
-
-            var elementoboton = document.createElement("button");
-            elementoboton.setAttribute("type", "button");
-            elementoboton.setAttribute("class", "btn-close btn-close-white ms-auto me-2");
-            elementoboton.setAttribute("data-bs-dismiss", "toast");
-            elementoboton.setAttribute("aria-label", "Close");
-            elementoboton.onclick = () => { elementopadre.replaceChild(document.createElement("div"), elemento); entro = false; };
-
-            elemento.appendChild(elementocuerpo);
-            elemento.appendChild(elementoboton);
-            elementopadre.appendChild(elemento);
-        }
-    }
-
-
     asignar_funciones() {
         if (inter == true) {
             document.getElementById("pulsado").onclick = this.alerta;

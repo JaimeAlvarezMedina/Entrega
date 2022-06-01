@@ -1,4 +1,35 @@
-
+.panel-heading {
+    color: #00415d;
+    background-color: #fff;
+    border-color: #fff;
+    text-align:center;
+}
+.panel-heading button{
+    text-decoration: none;
+  border: none;
+    color: #666;
+  background-color: white;
+    font-weight: bold;
+    font-size: 15px;
+    -webkit-transition: all 0.1s linear;
+    -moz-transition: all 0.1s linear;
+    transition: all 0.1s linear;
+}
+.panel-heading button.active{
+    color: #029f5b;
+    font-size: 18px;
+}
+.panel-heading hr{
+    margin-top: 10px;
+    margin-bottom: 0px;
+    clear: both;
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));
+    background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+    background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+    background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+}
 .sidemenu {
   height: 100vh; 
   width: 0; 
@@ -14,6 +45,10 @@
 }
 .btnclas{
   transition: 0.5s;
+}
+#donativo{
+width:40%;
+position:relative;
 }
 .dashboard-nav-dropdown-item{
   padding-left:60px !important;
@@ -264,7 +299,7 @@ margin: 0
 }
 .followbtn {
 width: 150px;
-margin-left: 15%;
+margin-left: 22%;
 }
 .followbtn:hover {
   border: none;

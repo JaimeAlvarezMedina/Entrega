@@ -29,3 +29,10 @@
     padding: 2px;
     width: 40px;
 }
+#imagen_post{
+    width:75%;
+    heigth:25%;
+}
+p{
+   text-align:justify;
+}

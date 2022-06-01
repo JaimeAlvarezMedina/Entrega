@@ -1,3 +1,4 @@
+
 import './App.css';
 import React from 'react';
 function Perfil(props) {
@@ -47,7 +48,6 @@ class Foro extends React.Component {
         this.closeNav = this.closeNav.bind(this);
         this.funcion = this.añadir_funcion.bind(this);
         this.f = this.funciones.bind(this);
-        this.coger_usuario = this.coger_datos_usuario.bind(this);
         this.perfil = this.perfil_usuario.bind(this);
         this.mi_perfil = this.mi_perfil_dentro.bind(this);
     }
@@ -92,36 +92,6 @@ class Foro extends React.Component {
                 mi_perfil.onclick = this.mi_perfil;
             }
         }
-    }
-    coger_datos_usuario() {
-        var datos = new FormData();
-        if (Boolean(localStorage.getItem("usuario")) == true) {
-            datos.append("usuario", localStorage.getItem("usuario"));
-        }
-        else {
-            datos.append("usuario", "");
-        }
-        fetch("http://159.223.172.191/consultar_usuario.php", {
-            method: "POST",
-            body: datos
-        })
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    if (result == 'vacio') {
-                        this.setState({ datos_usuario: ["Nada"] });
-                    }
-                    else {
-                        this.setState({ datos_usuario: result });
-                    }
-                },
-                (error) => {
-                    console.log(error);
-                }
-            )
-    }
-    componentDidMount() {
-        this.coger_usuario();
     }
     perfil_usuario({ currentTarget }) {
         window.location.href = "/Perfil";
@@ -168,7 +138,7 @@ class Foro extends React.Component {
                                                     </div>
                                                     <div class="single_advisor_details_info">
                                                         <h6>Abel</h6>
-                                                        <p class="designation">-</p>
+                                                        <p class="designation">-Parte del pdf<br/>-Apartado noticias(descartado)</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -201,7 +171,7 @@ class Foro extends React.Component {
                                                     </div>
                                                     <div class="single_advisor_details_info">
                                                         <h6>Eloy</h6>
-                                                        <p class="designation">Este ni lo a intentado</p>
+                                                        <p class="designation">-Diagrama de Gantt</p>
                                                     </div>
                                                 </div>
                                             </div>

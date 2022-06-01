@@ -1,5 +1,4 @@
 import './App.css';
-import imagen_perfil from './Imagenes/avatar-1-48.png';
 import React from 'react';
 function Perfil(props) {
     localStorage.setItem("tipo", props.id);
@@ -36,7 +35,7 @@ class Foro extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {  articulo: [], categoria: [], imagen_prueba: '', datos_usuario: [], tipo: "", cantidad_del_post: [],datos:[] };
+        this.state = {isToggleOn: true,  articulo: [], categoria: [], imagen_prueba: '', datos_usuario: [], tipo: "", cantidad_del_post: [],datos:[] };	
         this.noticia = this.recoger_articulo.bind(this);
         this.todas_categorias = this.recoger_categorias.bind(this);
         this.filtrar_categoria = this.filtrado_categorias.bind(this);
@@ -54,6 +53,12 @@ class Foro extends React.Component {
         this.cantidad_post = this.cantidad_post_usuario.bind(this);
         this.publicaciones = this.publicaciones_usuario.bind(this);
         this.actividad = this.actividad_usuario.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    }
+    handleClick() {
+      this.setState(prevState => ({
+        isToggleOn: !prevState.isToggleOn
+      }));
     }
 
     openNav() {
@@ -110,7 +115,7 @@ class Foro extends React.Component {
     }
     borrar_post({ currentTarget }) {
             var datos = new FormData();
-            datos.append('id_publicacion', currentTarget.id);
+            datos.append('id', currentTarget.id);
 
             fetch("http://159.223.172.191/borrar_publicacion.php", {
                 method: "POST",
@@ -119,7 +124,7 @@ class Foro extends React.Component {
                 .then(res => res.json())
                 .then(
                     (result) => {
-
+			this.noticias();
                         alert("borrado");
                     },
                     (error) => {
@@ -200,6 +205,9 @@ class Foro extends React.Component {
                         
                         articulo: result
                     });
+		    if(this.state.isToggleOn== true){
+                        this.handleClick()
+                    }
                 },
                 (error) => {
                     console.log(error);
@@ -259,6 +267,9 @@ class Foro extends React.Component {
                     this.setState({
                         articulo: result
                     });
+		    if(this.state.isToggleOn== false){
+                        this.handleClick();
+                    }
                 },
                 (error) => {
                     console.log(error);
@@ -304,7 +315,7 @@ class Foro extends React.Component {
     }
     borrar_publicacion({ currentTarget }) {
         var datos = new FormData();
-        datos.append('id_publicacion', currentTarget.id);
+        datos.append('id', currentTarget.id);
         fetch("http://159.223.172.191/borrar_publicacion.php", {
             method: "POST",
             body: datos
@@ -312,10 +323,10 @@ class Foro extends React.Component {
             .then(res => res.json())
             .then(
                 (result) => {
-                    if (result == "Correcto") {
-                        this.noticia();
-                        this.todas_categorias();
-                    }
+                    
+                     this.noticia();
+                     this.todas_categorias();
+                    
                 },
                 (error) => {
                     console.log(error);
@@ -354,7 +365,6 @@ class Foro extends React.Component {
             <div className='dashboard' onMouseEnter={this.funcion}>
                 <div id="mySidemenu" className="sidemenu">
                     <a href="javascript:void(0)" className="cerrar" onClick={this.closeNav}>&times;</a>
-                    <img src={imagen_perfil} className="dropdown-toggle" data-bs-toggle="dropdown" ></img>
                     {this.state.datos_usuario.map((usuario) => <Perfil id={usuario.Tipo} />)}
                     <a href="/foro" >Home</a>
                     
@@ -377,12 +387,6 @@ class Foro extends React.Component {
                                                 <div className="userprofile social ">
                                                     <div className="userpic"> <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="" className="userpicimg" /> </div>
                                                     <h2 type="text" className="username">{localStorage.getItem("Creador")}</h2>
-                                                    <p>Granada, La Zubia</p>
-                                                    <div className="socials tex-center"> <a href="" className="btn btn-circle btn-primary ">
-                                                        <i className="fa fa-facebook"></i></a> <a href="" className="btn btn-circle btn-danger ">
-                                                            <i className="fa fa-google-plus"></i></a> <a href="" className="btn btn-circle btn-info ">
-                                                            <i className="fa fa-twitter"></i></a> <a href="" className="btn btn-circle btn-warning "><i className="fa fa-envelope"></i></a>
-                                                    </div>
                                                 </div>
                                                 <div className="col-md-12 border-top border-bottom">
                                                     <ul className="nav nav-pills pull-left countlist" role="tablist">
@@ -401,7 +405,7 @@ class Foro extends React.Component {
                                                     </ul>
                                                     {mismousuario
                                                     ?<a href="/Editar_perfil" className="btn btn-secondary followbtn float-end mt-4 me-4">Editar</a>
-                                                    :<a href="/Editar_perfil" className="btn btn-secondary followbtn float-end mt-4 me-4">dd</a>
+                                                    :<p></p>
                                                     }
                                                     </div>
                                                 <div className="clearfix"></div>
@@ -411,12 +415,55 @@ class Foro extends React.Component {
                                     <div classNameName='botones'>
                                         
                                         <button className="btn btn-primary followbtn" onClick={this.todas_categorias}>Posts</button>
-                                        <button className="btn btn-primary followbtn">Estadisticas</button>
                                         <button onClick={this.actividad} className="btn btn-primary followbtn" >Actividad</button>
                                     </div>
                                     {mismousuario
-                                        ? <div> {this.state.articulo.map((partes) => <article id={partes.ID_articulo} key={partes.ID_articulo} ><div className="card border-success  m-4"><div className="card-body"><h5 className="card-title " id={partes.ID_articulo} key={partes.ID_articulo} onClick={this.coger_id}>{partes.Titulo}</h5><p id={partes.Creador} onClick={this.perfil}>Creado por:{partes.Creador}</p><p className="card-text">{partes.Cuerpo}</p><p>{partes.User}</p><p id={partes.ID_articulo} onClick={this.borrar}>BORRAR</p></div></div></article>)}</div>
-                                        : <div> {this.state.articulo.map((partes) => <article id={partes.ID_articulo} key={partes.ID_articulo} ><div className="card border-success  m-4"><div className="card-body"><h5 className="card-title " id={partes.ID_articulo} key={partes.ID_articulo} onClick={this.coger_id}>{partes.Titulo}{partes.User}</h5><p id={partes.Creador} onClick={this.perfil}>Creado por:{partes.Creador}</p><p className="card-text">{partes.Cuerpo}</p></div></div></article>)}</div>
+                                        ? <div>
+                                        {this.state.articulo.map((partes) => <article id={partes.ID_articulo} key={partes.ID_articulo} className="contenedor_publicacion">
+                                            <div className="card_post m-4" style={{ background: "linear-gradient(90deg, rgba(70, 255, 41, 0.408) 0%, rgba(242, 242, 242)" + partes.like_totales * 100 / partes.actividad_total + "%, rgba(255, 33, 33, 0.431) 100%)" }}>
+                                                <div className="card-bodyy">
+                                                    <h5 className="card-title text-primary" id={partes.ID_articulo} onClick={this.coger_id}>{partes.Titulo}{partes.User}</h5>
+                                                    <p id={partes.ID_articulo} onClick={this.coger_id} className="card-text">{partes.Cuerpo}...</p>
+                                                    <div id={partes.ID_articulo} onClick={this.coger_id} className="ttt">
+                                                    </div>
+                                                    <div className="like_dislike">
+                                                        <button className="btn" id={partes.ID_articulo}>Likes {partes.like_totales}</button>
+                                                        <button id={partes.ID_articulo} className="btn">Dislikes {partes.dislike_totales}</button>
+                                                    </div>
+                                                    <div className="categoria_post" id={partes.Categoria} onClick={this.filtrar_categoria_post}>{partes.Categoria}</div>
+                                                </div>
+                                                
+                                            </div>
+
+                                            {this.state.isToggleOn
+
+                                            ?<button id={partes.ID_articulo} onClick={this.borrar}>Borrar publicacion</button>
+                                            :<p></p>
+                                        }
+                                        </article>
+                                        )} 
+                                    </div>
+                                        :<div>
+                                        {this.state.articulo.map((partes) => <article id={partes.ID_articulo} key={partes.ID_articulo} className="contenedor_publicacion">
+                                            <div className="card_post m-4" style={{ background: "linear-gradient(90deg, rgba(70, 255, 41, 0.408) 0%, rgba(242, 242, 242)" + partes.like_totales * 100 / partes.actividad_total + "%, rgba(255, 33, 33, 0.431) 100%)" }}>
+                                                <div className="card-bodyy">
+                                                    <h5 className="card-title text-primary" id={partes.ID_articulo} onClick={this.coger_id}>{partes.Titulo}{partes.User}</h5>
+                                                    <p id={partes.ID_articulo} onClick={this.coger_id} className="card-text">{partes.Cuerpo}...</p>
+                                                    <div id={partes.ID_articulo} onClick={this.coger_id} className="ttt">
+                                                    </div>
+                                                    <div className="like_dislike">
+                                                        <button className="btn" id={partes.ID_articulo}>Likes {partes.like_totales}</button>
+                                                        <button id={partes.ID_articulo} className="btn">Dislikes {partes.dislike_totales}</button>
+                                                    </div>
+                                                    <div className="categoria_post" id={partes.Categoria} onClick={this.filtrar_categoria_post}>{partes.Categoria}</div>
+                                                </div>
+                                                
+                                            </div>
+
+                                            
+                                        </article>
+                                        )}
+					</div>
                                     }
                                 </div>
                             </div>

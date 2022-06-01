@@ -2,6 +2,9 @@ import './App.css';
 import React from 'react';
 import Imagen_foto from './Imagenes/Paisaje.png';
 import Imagen_texto from './Imagenes/Boton_texto.png';
+
+var correcto='true';
+
 function Perfil(props) {
   localStorage.setItem("tipo", props.id);
   localStorage.setItem("nombre_usuario", props.algo);
@@ -72,27 +75,34 @@ closeNav() {
     }, 300);
 }
   subir_base_datos() {
-    var datos = new FormData();
-    datos.append('creador', localStorage.getItem("usuario"));
-    datos.append('cuerpo', texto.join('//-//'));
-    datos.append('titulo', document.getElementById("titulo").value);
-    datos.append('categoria', document.getElementById("categoria").value);
-    fetch("http://159.223.172.191/subir_post.php", {
-      method: "POST",
-      body: datos
-    })
-      .then(res => res.json())
-      .then(
-        (result) => {
-          if (result == "Correcto") {
-            window.location.href = "/foro";
-          }
+    if(correcto=='true'){
+    	var datos = new FormData();
+    	datos.append('creador', localStorage.getItem("usuario"));
+    	datos.append('cuerpo', texto.join('//-//'));
+    	datos.append('titulo', document.getElementById("titulo").value);
+    	datos.append('categoria', document.getElementById("categoria").value);
+    	fetch("http://159.223.172.191/subir_post.php", {
+      		method: "POST",
+      		body: datos
+    	})
+      	.then(res => res.json())
+      	.then(
+        	(result) => {
+          	if (result == "Correcto") {
+             		window.location.href = "/foro";
+          	}
 
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
+        	},
+        	(error) => {
+	          console.log(error);
+        	}
+      )}
+      else{
+	var elemento=document.getElementById("errores");
+      	elemento.setAttribute("role","alert");
+      	elemento.setAttribute("class","alert alert-danger");
+      	elemento.appendChild(document.createTextNode("No se permite subir archivos .gif"));
+      }
   }
 
   crear_post(contador) {
@@ -110,10 +120,14 @@ closeNav() {
           .then(res => res.json())
           .then(
             (result) => {
-              console.log(contador);
-              texto[contador] = result;
-              console.log(texto);
-              console.log(contador);
+              if(result=='No disponible'){
+		correcto='false';
+		texto[contador] = result;
+	      }
+	      else{
+		texto[contador] = result;
+	      }
+              
             },
             (error) => {
               console.log(error);
@@ -228,7 +242,8 @@ closeNav() {
                       <div id='alerta'>{this.state.error}</div>
                     </footer>
                     <button onClick={this.subir_post.bind(this, 0)} className="btn btn-success">Crear post</button>
-                  </div>
+                    <div id="errores"></div>
+		   </div>
                 </div>
               </div>
             </div>

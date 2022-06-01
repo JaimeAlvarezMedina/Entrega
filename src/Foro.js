@@ -2,6 +2,7 @@ import './App.css';
 import lupa from './Imagenes/lupa.png';
 import React from 'react';
 import Popup from 'reactjs-popup';
+import Boton_donar from './Imagenes/boton_donar.png';
 
 const Modal = (popup) => (
 
@@ -18,30 +19,32 @@ const Modal = (popup) => (
                                 &times;
                             </button>
                         </div>
-
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
                         <div class="user text-center">
                             <div class="profile">
-                                <img src="https://i.imgur.com/JgYD2nQ.jpg" class="rounded-circle" width="80" />
+                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="rounded-circle" width="80" />
                             </div>
                         </div>
                         <div class="mt-5 text-center">
 
                             <a href='/Perfil'>{popup.id}</a>
                             {localStorage.setItem("Creador", popup.id)}
-                            <span class="text-muted d-block mb-2">Los Angles</span>
-                            <button class="btn btn-primary btn-sm follow">Follow</button>
+                            <br/><br/>
+                            <div className="socials tex-center">
+
+                            </div>
                             <div class="d-flex justify-content-between align-items-center mt-4 px-4">
                                 <div class="stats">
-                                    <h6 class="mb-0">Followers</h6>
-                                    <span>8,797</span>
+                                    <h6 class="mb-0">Post</h6>
+                                    <span>1</span>
+                                </div>
+				 <div class="stats">
+                                    <h6 class="mb-0">Likes</h6>
+                                    <span>{popup.like}</span>
                                 </div>
                                 <div class="stats">
-                                    <h6 class="mb-0">Projects</h6>
-                                    <span>142</span>
-                                </div>
-                                <div class="stats">
-                                    <h6 class="mb-0">Ranks</h6>
-                                    <span>129</span>
+                                    <h6 class="mb-0">Dislikes</h6>
+                                    <span>{popup.dislike}</span>
                                 </div>
                             </div>
                         </div>
@@ -70,16 +73,13 @@ function Perfil(props) {
                 </div>
             )
         }
-        if (props.id != "admin" && props.id != "cliente") {
-            return (
-                <a href="/login" >Login</a>
-            )
-        }
     }
     else {
-        return (
-            <a href="/login" >Login</a>
-        )
+         return (
+		<div>
+            		<a href="/login">Login</a>
+		</div>
+         )
     }
 }
 function Mi_perfil(props) {
@@ -116,7 +116,6 @@ class Foro extends React.Component {
         this.borrar = this.borrar_publicacion.bind(this);
         this.like = this.like_usuario.bind(this);
         this.dislike = this.dislike_usuario.bind(this);
-        this.preview = this.preview_perfil.bind(this);
         this.perfil = this.perfil_usuario.bind(this);
         this.filtrar_categoria_post = this.filtrar_en_categoria_post.bind(this);
         this.mi_perfil = this.mi_perfil_usuario.bind(this);
@@ -346,6 +345,7 @@ class Foro extends React.Component {
                 }
             )
     }
+
     recoger_articulo() {
         var datos = new FormData();
         fetch("http://159.223.172.191/recoger_informacion.php", {
@@ -355,8 +355,6 @@ class Foro extends React.Component {
             .then(res => res.json())
             .then(
                 (result) => {
-
-
                     this.setState({
                         articulo: result
                     });
@@ -366,6 +364,7 @@ class Foro extends React.Component {
                 }
             )
     }
+
     color_opcion() {
         var datos = new FormData();
         fetch("http://159.223.172.191/recoger_color.php", {
@@ -386,7 +385,7 @@ class Foro extends React.Component {
     }
     borrar_publicacion({ currentTarget }) {
         var datos = new FormData();
-        datos.append('id_publicacion', currentTarget.id);
+        datos.append('id', currentTarget.id);
         fetch("http://159.223.172.191/borrar_publicacion.php", {
             method: "POST",
             body: datos
@@ -394,10 +393,8 @@ class Foro extends React.Component {
             .then(res => res.json())
             .then(
                 (result) => {
-                    if (result == "Correcto") {
                         this.noticia();
                         this.todas_categorias();
-                    }
                 },
                 (error) => {
                     console.log(error);
@@ -425,8 +422,6 @@ class Foro extends React.Component {
         this.coger_usuario();
         this.todas_categorias();
         this.coger_usuario();
-
-        console.log(localStorage.getItem("usuario"));
     }
     insertar() {
         var datos = new FormData;
@@ -483,7 +478,7 @@ class Foro extends React.Component {
                             <input type="text" className="form-control" id="barra_busqueda" placeholder="Search" />
                             <a className="btn btn-secondary" onClick={this.barra_busqueda}><img className="lupa" src={lupa}></img></a>
                         </form>
-                        <a href='https://buy.stripe.com/test_8wMaHL86l0yNgrm001'>Donacion</a>
+                        <a id='enlace_donar' href='https://buy.stripe.com/test_8wMaHL86l0yNgrm001'><img id="donativo"  src={Boton_donar}/></a>
                     </div>
                     <div className='dashboard-app'>
                         <header className='dashboard-toolbar'><a href="#!" className="menu-toggle"><i className="fas fa-bars"></i></a></header>
@@ -499,25 +494,40 @@ class Foro extends React.Component {
                                     <div className='card-body'>
                                         {admin
                                             ? <div>
-                                                {this.state.articulo.map((partes) => <div id='articulo_boton'><article id={partes.ID_articulo} key={partes.ID_articulo} onClick={this.coger_id}><div className="card border-success  m-4"><div className="card-body"><h5 className="card-title ">{partes.Titulo}</h5><p className="card-text">{partes.Cuerpo}</p></div></div></article>
-                                                    <button id={partes.ID_articulo} onClick={this.borrar}>Borrar publicación</button>
-                                                </div>
-                                                )}
-                                            </div>
-                                            : <div>
                                                 {this.state.articulo.map((partes) => <article id={partes.ID_articulo} key={partes.ID_articulo} className="contenedor_publicacion">
                                                     <div className="card_post m-4" style={{ background: "linear-gradient(90deg, rgba(70, 255, 41, 0.408) 0%, rgba(242, 242, 242)" + partes.like_totales * 100 / partes.actividad_total + "%, rgba(255, 33, 33, 0.431) 100%)" }}>
-                                                        <div className="card-bodyy"><Modal id={partes.Creador} />
+                                                        <div className="card-bodyy"><Modal id={partes.Creador} like={partes.like_totales} dislike={partes.dislike_totales}/>
                                                             <h5 className="card-title text-primary" id={partes.ID_articulo} onClick={this.coger_id}>{partes.Titulo}{partes.User}</h5>
                                                             <p id={partes.ID_articulo} onClick={this.coger_id} className="card-text">{partes.Cuerpo}...</p>
                                                             <div id={partes.ID_articulo} onClick={this.coger_id} className="ttt">
                                                             </div>
                                                             <div className="like_dislike">
-                                                                <button className="btn" id={partes.ID_articulo}>L{partes.like_totales}</button>
-                                                                <button id={partes.ID_articulo}  className="btn">D{partes.dislike_totales}</button>
+                                                                <button className="btn" id={partes.ID_articulo}>Likes {partes.like_totales}</button>
+                                                                <button id={partes.ID_articulo} className="btn">Dislikes {partes.dislike_totales}</button>
                                                             </div>
                                                             <div className="categoria_post" id={partes.Categoria} onClick={this.filtrar_categoria_post}>{partes.Categoria}</div>
                                                         </div>
+                                                        
+                                                    </div>
+                                                    <button id={partes.ID_articulo} onClick={this.borrar}>Borrar publicación</button>
+                                                </article>
+                                                )}
+                                            </div>
+                                            : <div>
+                                                {this.state.articulo.map((partes) => <article id={partes.ID_articulo} key={partes.ID_articulo} className="contenedor_publicacion">
+                                                    <div className="card_post m-4" style={{ background: "linear-gradient(90deg, rgba(70, 255, 41, 0.408) 0%, rgba(242, 242, 242)" + partes.like_totales * 100 / partes.actividad_total + "%, rgba(255, 33, 33, 0.431) 100%)" }}>
+                                                        <div className="card-bodyy"><Modal id={partes.Creador} like={partes.like_totales} dislike={partes.dislike_totales}/>
+                                                            <h5 className="card-title text-primary" id={partes.ID_articulo} onClick={this.coger_id}>{partes.Titulo}{partes.User}</h5>
+                                                            <p id={partes.ID_articulo} onClick={this.coger_id} className="card-text">{partes.Cuerpo}...</p>
+                                                            <div id={partes.ID_articulo} onClick={this.coger_id} className="ttt">
+                                                            </div>
+                                                            <div className="like_dislike">
+                                                                <button className="btn" id={partes.ID_articulo}>Likes {partes.like_totales}</button>
+                                                                <button id={partes.ID_articulo} className="btn">Dislikes {partes.dislike_totales}</button>
+                                                            </div>
+                                                            <div className="categoria_post" id={partes.Categoria} onClick={this.filtrar_categoria_post}>{partes.Categoria}</div>
+                                                        </div>
+                                                        
                                                     </div>
                                                 </article>
                                                 )}
